@@ -9,7 +9,7 @@ Blue='\033[0;34m'
 Purple='\033[0;35m'
 Cyan='\033[0;36m'
 White='\033[0;37m'
-
+Bold='\033[1m'
 Color_Off='\033[0m'
 
 # IP ADDRESSES
@@ -20,11 +20,15 @@ publicip=$(curl -s ifconfig.me)
 tty_check=false
 if [ -z "$SSH_CONNECTION" ] && [ -t 0 ]; then
     if ping -c 1 gnu.org &>/dev/null; then
-        internet_status="\e[32m[UP]\e[0m Internet Connection"
+        internet_status="${Green}${Bold}[UP]${Color_Off}${Cyan} Internet Connection${Color_Off}"
     else
-        internet_status="\e[31m[DOWN]\e[0m Internet Connection"
+        internet_status="${Red}${Bold}[DOWN]${Color_Off}${Cyan} Internet Connection${Color_Off}"
     fi
     echo -e "$internet_status"
-
+    echo -e "${Cyan}Connect to the server using SSH:${Color_Off}"
+    echo -e "${Cyan}  - Local:${Color_Off} ${White}${Bold}ssh your_username@${localip}${Color_Off}"
+    echo -e "${Cyan}  - Public:${Color_Off} ${White}${Bold}ssh your_username@${publicip}${Color_Off}"
+else
+    echo -e "${Cyan}${Bold}Welcome to the server${Color_Off}"
 fi
 
